@@ -47,3 +47,21 @@ All data is stored locally for forensic simulation
 No cloud, no external APIs — pure LAN realism
 
 Designed for Raspberry Pi deployment, but runs on Ubuntu as well
+# LAN Surveillance System
+
+A LAN-only camera overlay system built with Flask and OpenCV. Designed for Raspberry Pi or Ubuntu.
+
+## 🎯 Features
+- Real-time camera feed with timestamp overlay
+- LAN-only access — no internet required
+- Modular structure for sounds, overlays, and future expansions
+
+## 🚀 Setup
+```bash
+git clone git@github.com:catgamer19/lan_surveillance_system.git
+cd lan_surveillance_system
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+python app.py
+>>>>>>> 04ebb13 (Import full project files from pi-security-cam root)

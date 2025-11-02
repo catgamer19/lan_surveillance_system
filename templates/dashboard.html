@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MR.A_HACKER sir - Tactical Surveillance Dashboard</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <style>
+        body {
+            background-color: #000;
+            color: #00FF00;
+            font-family: 'Courier New', Courier, monospace;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 2em;
+            color: #FF0000;
+            text-shadow: 0 0 5px #FF0000;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            margin: 10px;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 0 5px #0f0;
+        }
+        input[type="text"] {
+            padding: 10px;
+            font-size: 1em;
+            width: 300px;
+            background-color: #111;
+            color: #0f0;
+            border: 1px solid #0f0;
+        }
+        #countdown {
+            font-size: 1.5em;
+            margin: 20px;
+            color: #FF0000;
+            font-weight: bold;
+        }
+        a {
+            color: cyan;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>🛡️ MR.A_HACKER sir - LAN Surveillance Feed</h1>
+
+    <p><a href="/raw_feed" target="_blank">⚡ Open Raw Feed (No Overlays)</a></p>
+
+    <div>
+        <img src="/video_feed" width="640" height="480" alt="Live Surveillance Feed">
+    </div>
+
+    <div id="countdown">🟢 SYSTEM ARMED - Awaiting Trigger</div>
+
+    <!-- Password Form -->
+    <form method="POST" action="/security">
+        <input type="text" name="password" placeholder="Enter password to defuse alarm">
+        <br>
+        <button type="submit" style="background-color: #222; color: #0f0;">🔓 Submit Password</button>
+    </form>
+
+    <!-- Start Detection Button -->
+    <form method="POST" action="/start_detection">
+        <button type="submit" style="background-color: limegreen; color: black;">🎯 START DETECTION</button>
+    </form>
+
+    <!-- Manual Alarm -->
+    <form method="POST" action="/manual_alarm">
+        <button type="submit" style="background-color: orange; color: black;">⚠️ MANUAL ALARM</button>
+    </form>
+
+    <!-- Stop Alarm -->
+    <form method="POST" action="/stop_alarm">
+        <button type="submit" style="background-color: red; color: white;">🛑 STOP ALARM</button>
+    </form>
+
+    <!-- Socket Events -->
+    <script>
+        const socket = io();
+
+        socket.on('countdown', data => {
+            document.getElementById('countdown').innerText = `⏳ ALARM IN: ${data.seconds} seconds`;
+        });
+
+        socket.on('alarm_defused', data => {
+            document.getElementById('countdown').innerText = '✅ ALARM DEFUSED - SYSTEM STABLE';
+        });
+
+        socket.on('alarm_triggered', data => {
+            document.getElementById('countdown').innerText = '🚨 ALARM TRIGGERED - BREACH DETECTED';
+        });
+
+        socket.on('detection_started', data => {
+            document.getElementById('countdown').innerText = '🎯 MOTION DETECTION ACTIVE - MONITORING...';
+        });
+    </script>
+</body>
+</html>
